@@ -7,10 +7,59 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="meteors" id="meteors"></div>
     <div class="container">
         <h1>Hi, I'm lawrentz.</h1>
         <p>I design, code and deploy.</p>
     </div>
-    <script src="particles.js"></script>
+    <script>
+        // Create meteors
+        function createMeteor() {
+            const meteor = document.createElement('div');
+            meteor.className = 'meteor';
+            
+            // Random starting position
+            meteor.style.left = Math.random() * window.innerWidth + 'px';
+            meteor.style.top = '-5px';
+            
+            // Responsive animation duration and delay
+            const isMobile = window.innerWidth <= 768;
+            const duration = Math.random() * (isMobile ? 4 : 6) + (isMobile ? 3 : 4); // Slower, more subtle
+            const delay = Math.random() * (isMobile ? 3 : 5); // Longer delay
+            
+            meteor.style.animation = `meteor ${duration}s linear ${delay}s infinite`;
+            
+            document.getElementById('meteors').appendChild(meteor);
+            
+            // Remove meteor after animation
+            setTimeout(() => {
+                if (meteor.parentNode) {
+                    meteor.parentNode.removeChild(meteor);
+                }
+            }, (duration + delay) * 1000);
+        }
+        
+        // Create meteors periodically
+        function startMeteorShower() {
+            const isMobile = window.innerWidth <= 768;
+            const interval = isMobile ? 3000 : 2500; // Much less frequent
+            const chance = isMobile ? 0.1 : 0.15; // Much lower chance for subtlety
+            
+            setInterval(() => {
+                if (Math.random() < chance) {
+                    createMeteor();
+                }
+            }, interval);
+        }
+        
+        // Start the meteor shower when page loads
+        window.addEventListener('load', () => {
+            startMeteorShower();
+            // Create initial meteors (fewer and more spaced out)
+            for (let i = 0; i < 2; i++) {
+                setTimeout(() => createMeteor(), i * 1500);
+            }
+        });
+    </script>
 </body>
 </html>

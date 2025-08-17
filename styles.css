@@ -7,22 +7,211 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: #f0f0f0;
+    background: 
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)),
+        url('tree-with-starry-night-background.jpg') center/cover no-repeat;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.5px 0.5px at 90px 40px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.5px 0.5px at 130px 80px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 160px 30px, rgba(255,255,255,0.3), transparent);
+    background-repeat: repeat;
+    background-size: 300px 150px;
+    animation: sparkle 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+@keyframes sparkle {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-300px); }
+}
+
+@keyframes meteor {
+    0% {
+        transform: rotate(215deg) translateX(0);
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(215deg) translateX(-500px);
+        opacity: 0;
+    }
+}
+
+.meteors {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.meteor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 3px 1px rgba(255, 255, 255, 0.4),
+        0 0 6px 2px rgba(173, 216, 230, 0.2),
+        0 0 9px 3px rgba(135, 206, 235, 0.1);
+    opacity: 0.7;
+}
+
+.meteor::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 0.5px;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.6) 0%, 
+        rgba(173, 216, 230, 0.3) 30%, 
+        rgba(135, 206, 235, 0.2) 60%, 
+        transparent 100%);
+    right: 1px;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .container {
     max-width: 80%;
-    background: #f0f0f0;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 8px 32px 0 rgba(31, 38, 135, 0.37),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 60px rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 10;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 12px 40px 0 rgba(31, 38, 135, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 80px rgba(255, 255, 255, 0.1);
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: #ffffff;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(173, 216, 230, 0.3),
+        0 0 30px rgba(135, 206, 235, 0.2);
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 p {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    color: #e8e8e8;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    opacity: 0.9;
+}
+
+/* Mobile and Tablet Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    p {
+        font-size: 0.8rem;
+    }
+    
+    .meteor::before {
+        width: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        max-width: 95%;
+        padding: 1.5rem;
+        margin: 0.5rem;
+        border-radius: 15px;
+    }
+    
+    h1 {
+        font-size: 1.1rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    p {
+        font-size: 0.75rem;
+    }
+    
+    .meteor::before {
+        width: 40px;
+    }
+    
+    body::before {
+        background-size: 150px 75px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 1rem;
+        max-width: 98%;
+    }
+    
+    h1 {
+        font-size: 1rem;
+    }
+    
+    p {
+        font-size: 0.7rem;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 60%;
+        padding: 4rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    p {
+        font-size: 1rem;
+    }
 }
